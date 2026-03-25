@@ -17,6 +17,6 @@ public class IdleWalkState : StateMachineBehaviour
     {
         time += Time.deltaTime;
         if (time > 10) //sau 10 giay thi set co tuan tra la true
-            animator.SetBool("IsPatrolling", false);
+            animator.SetBool("isPatrolling", false);
     }
 }
