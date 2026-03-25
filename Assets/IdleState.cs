@@ -17,6 +17,6 @@ public class IdleState : StateMachineBehaviour
     {
         time += Time.deltaTime;
         if (time > 5) //sau 5 giay thi set co tuan tra la true
-            animator.SetBool("IsPatrolling", true);
+            animator.SetBool("isPatrolling", true);
     }
 }
