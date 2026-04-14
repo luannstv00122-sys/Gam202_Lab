@@ -38,6 +38,7 @@ public class AttributesManager : MonoBehaviour
 
     // Slider đại diện cho thanh máu
     private Slider healthSlider;
+    private Slider healthSliderPlayer;
 
 
     // Canvas chứa thanh máu (World Space)
@@ -81,9 +82,17 @@ public class AttributesManager : MonoBehaviour
         // =======================
         Transform bar = healthCanvas.Find("HealthBar");
 
+        Transform barPlayer = healthCanvas.Find("HeathBarPlayer");
+
 
         // Nếu không tìm thấy HealthBar → báo lỗi
         if (bar == null)
+        {
+            Debug.LogError("Không tìm thấy HealthBar trong Canvas: " + gameObject.name);
+            return;
+        }
+
+        if (barPlayer == null)
         {
             Debug.LogError("Không tìm thấy HealthBar trong Canvas: " + gameObject.name);
             return;
@@ -93,9 +102,17 @@ public class AttributesManager : MonoBehaviour
         // Lấy component Slider từ HealthBar
         healthSlider = bar.GetComponent<Slider>();
 
+        healthSliderPlayer = barPlayer.GetComponent<Slider>();
+
 
         // Nếu HealthBar không có Slider → báo lỗi
         if (healthSlider == null)
+        {
+            Debug.LogError("HealthBar không có Slider component");
+            return;
+        }
+
+        if (healthSliderPlayer == null)
         {
             Debug.LogError("HealthBar không có Slider component");
             return;
@@ -108,6 +125,13 @@ public class AttributesManager : MonoBehaviour
 
         // Gán giá trị ban đầu
         healthSlider.value = health;
+
+        // Gán giá trị max cho thanh máu
+        healthSliderPlayer.maxValue = health;
+
+
+        // Gán giá trị ban đầu
+        healthSliderPlayer.value = health;
     }
 
 
@@ -149,6 +173,26 @@ public class AttributesManager : MonoBehaviour
         // Nếu máu <= 0 → chết
         if (health <= 0)
             EnemyDie();
+    }
+
+    public void TakeDamagePlayer(int amount)
+    {
+        // Trừ máu theo damage nhận vào
+        health -= amount;
+
+
+        // Nếu không phải Enemy thì không xử lý UI
+        if (!CompareTag("Player")) return;
+
+
+        // Cập nhật giá trị thanh máu
+        if (healthSlider != null)
+            healthSlider.value = health;
+
+
+        // Nếu máu <= 0 → chết
+        if (health <= 0)
+            PlayerDie();
     }
 
 
