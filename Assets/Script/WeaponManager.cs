@@ -1,16 +1,27 @@
+
 using UnityEngine;
+
 
 public class WeaponManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public GameObject Weapon;
+    // Tham chiếu đến vũ khí của người chơi
+    public GameObject weapon;
 
-    public void EndbleWeaponCollider(int isEnable)
+
+    // Hàm được gọi từ Animation Event
+    // isEnable = 1 → bật collider
+    // isEnable = 0 → tắt collider
+    public void EnableWeaponCollider(int isEnable)
     {
-        if (Weapon != null)
+        // Kiểm tra đã gán vũ khí chưa
+        if (weapon != null)
         {
-            Collider col = Weapon.GetComponent<Collider>();
-            if(col = null)
+            // Lấy collider của vũ khí
+            Collider col = weapon.GetComponent<Collider>();
+
+
+            // Nếu có collider thì bật / tắt
+            if (col != null)
             {
                 if (isEnable == 1)
                     col.enabled = true;
@@ -19,14 +30,5 @@ public class WeaponManager : MonoBehaviour
             }
         }
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
