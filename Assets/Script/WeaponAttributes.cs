@@ -1,24 +1,62 @@
+
 using UnityEngine;
+
+
+// public class WeaponAttributes : MonoBehaviour
+// {
+//     public AttributesManager atm;
+
+
+//     private void OnTriggerEnter(Collider other)
+//     {
+//         if (other.transform.root == transform.root) return;
+
+
+//         // Player đánh Enemy
+//         if (other.CompareTag("Enemy"))
+//         {
+//             atm.DealDamage(other.gameObject);
+//         }
+
+
+//         // Enemy đánh Player
+//         if (other.CompareTag("Player"))
+//         {
+//             Debug.Log("Enemy chem Player");
+
+
+//             atm.DealDamage(other.gameObject); //  DÙNG CHUNG
+//         }
+//     }
+// }
+
 
 public class WeaponAttributes : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public AttributesManager atm;
+    private AttributesManager atm;
+
+
+    private void Awake()
+    {
+        atm = GetComponentInParent<AttributesManager>();
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
+        if (other.transform.root == transform.root) return;
+
+
         if (other.CompareTag("Enemy"))
         {
             atm.DealDamage(other.gameObject);
         }
-    }
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Enemy chem Player");
+            atm.DealDamage(other.gameObject);
+        }
     }
 }
